@@ -13,8 +13,10 @@ const getDelta = (ds, agentId, value) => value - ds.agents[agentId][1]
 const shouldApplyDelta = (ds, [seq, agentId]) =>
   ds.agents[agentId] === undefined || seq > ds.agents[agentId][0]
 
-const applyDelta = (ds, [seq, agentId], value) => {
-  ds.agents[agentId] = [seq, value]
+const applyDelta = (ds, [seq, agentId], delta) => {
+  const { agents } = ds
+  agents[agentId] = [seq, agents[agentId][1] + delta]
+  ds.version = [seq, agentId]
 }
 
 const shouldSet = ({ version: [seq, agentId] }, [seq2, agentId2]) =>
