@@ -22,7 +22,10 @@ const applyDelta = (ds, [seq, agentId], delta) => {
 const shouldSet = ({ version: [seq, agentId] }, [seq2, agentId2]) =>
   seq2 > seq || (seq2 === seq && agentId2 > agentId)
 
-const set = (ds, uid) => {
+const set = (ds, uid, value) => {
+  const [seq, agentId] = uid
+  const { agents } = ds
+  agents[agentId] = [seq, value]
   ds.version = uid
 }
 
